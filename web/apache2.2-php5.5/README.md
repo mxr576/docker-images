@@ -1,5 +1,4 @@
-# docker-apache-php
-Apache and PHP5 Docker container
+# Apache2.2 and PHP5.5 Docker container
 
 ## Includes
 
