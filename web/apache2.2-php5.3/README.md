@@ -1,2 +1,10 @@
-# docker-images
-A library of Docker images for Drupal development
+# docker-apache-php
+Apache and PHP5 Docker container
+
+## Includes
+
+- apache2.2 (SSL enabled)
+- php-fpm 5.3
+- mysql-client
+- composer
+- drush
