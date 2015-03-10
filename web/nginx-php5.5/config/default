@@ -1,0 +1,22 @@
+server {
+        listen  80;
+
+        # Include shared settings
+        include /etc/nginx/conf.d/includes/drupal.conf;
+}
+
+server {
+        listen               443 ssl;
+        ssl                  on;
+        ssl_certificate      /etc/ssl/certs/server.crt;
+        ssl_certificate_key  /etc/ssl/private/server.key;
+ 
+        ssl_session_cache shared:SSL:1m;
+        ssl_session_timeout  5m;
+ 
+        ssl_ciphers  HIGH:!aNULL:!MD5;
+        ssl_prefer_server_ciphers   on;
+
+        # Include shared settings
+        include /etc/nginx/conf.d/includes/drupal.conf;
+}
