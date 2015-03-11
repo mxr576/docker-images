@@ -14,8 +14,11 @@ RUN \
     DEBIAN_FRONTEND=noninteractive \
     apt-get -y --force-yes --reinstall install php5-fpm php5-mysql php5-imagick php5-imap \
     php5-mcrypt php5-curl php5-cli php5-gd php5-sqlite php5-common php-apc \
-    php-pear php5-json php5-memcache && \
+    php-pear php5-json php5-memcache php5-xdebug && \
     # Cleanup
     DEBIAN_FRONTEND=noninteractive apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     apt-get autoclean && apt-get -y autoremove
+
+# xdebug.so has been moved after upgrade
+RUN sed -i 's/zend_extension=.*/zend_extension=\/usr\/lib\/php5\/20121212\/xdebug.so/' /etc/php5/fpm/conf.d/20-xdebug.ini
