@@ -29,8 +29,8 @@ RUN \
 EXPOSE 11211
 
 # Default setting for memcached memory limit
-ENV MEMCACHED_MEMORY_LIMIT 64
+ENV MEMCACHED_MEMORY_LIMIT 128
 
 USER memcache
 
-CMD memcached -u memcache -m $MEMCACHED_MEMORY_LIMIT -c 1024 -f 1.25 -t 1 -D :
+CMD memcached -m $MEMCACHED_MEMORY_LIMIT -c 1024 -f 1.25 -t 1 -D :
