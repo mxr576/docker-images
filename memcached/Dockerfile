@@ -26,13 +26,11 @@ RUN \
     DEBIAN_FRONTEND=noninteractive apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Startup script
-# This startup script will configure apache
-ADD ./startup.sh /opt/startup.sh
-RUN chmod +x /opt/startup.sh
-
 EXPOSE 11211
 
+# Default setting for memcached memory limit
 ENV MEMCACHED_MEMORY_LIMIT 64
+
+USER memcache
 
 CMD memcached -u memcache -m $MEMCACHED_MEMORY_LIMIT -c 1024 -f 1.25 -t 1 -D :
