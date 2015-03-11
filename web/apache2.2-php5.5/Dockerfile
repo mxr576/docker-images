@@ -4,7 +4,9 @@ FROM blinkreaction/drupal-web-base
 RUN echo "deb http://ppa.launchpad.net/ondrej/php5/ubuntu precise main " >> /etc/apt/sources.list
 
 # Tell DPKG to keep the old config file to prevent installation error "Modified (by you or by a script) since installation."
-RUN echo "Dpkg::Options { \"--force-confdef\"; \"--force-confold\"; }" >> /etc/apt/apt.conf.d/local
+RUN echo "Dpkg::Options { \"--force-confdef\"; \"--force-confold\"; }" >> /etc/apt/apt.conf.d/local && \
+    # Backup old xdebug.ini
+    cp /etc/php5/fpm/conf.d/xdebug.ini /opt/xdebug.ini
 
 # Upgrade php5.3 to php5.5
 RUN \
@@ -20,5 +22,7 @@ RUN \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     apt-get autoclean && apt-get -y autoremove
 
+# Restore old xdebug.ini
+RUN mv /opt/xdebug.ini /etc/php5/mods-available/xdebug.ini
 # xdebug.so has been moved after upgrade
-RUN sed -i 's/zend_extension=.*/zend_extension=\/usr\/lib\/php5\/20121212\/xdebug.so/' /etc/php5/fpm/conf.d/20-xdebug.ini
+RUN sed -i 's/zend_extension=.*/zend_extension=\/usr\/lib\/php5\/20121212\/xdebug.so/' /etc/php5/mods-available/xdebug.ini
