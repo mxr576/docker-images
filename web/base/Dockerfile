@@ -22,7 +22,7 @@ RUN \
     DEBIAN_FRONTEND=noninteractive \
     apt-get -y install php5-fpm php5-mysql php5-imagick php5-imap \
     php5-mcrypt php5-curl php5-cli php5-gd php5-sqlite php5-common php-apc \
-    php-pear php5-json php5-memcache \
+    php-pear php5-json php5-memcache php5-xdebug \
     git curl mysql-client supervisor \
     apache2-mpm-worker libapache2-mod-fastcgi && \
     # Cleanup
@@ -41,11 +41,12 @@ RUN curl -sS https://getcomposer.org/installer | php && \
 RUN composer global require drush/drush:dev-master
 
 # Configuration
-ADD ./config/default /etc/apache2/sites-available/default
-ADD ./config/default-ssl /etc/apache2/sites-available/default-ssl
-ADD ./config/host.conf /etc/apache2/sites-available/includes/host.conf
+ADD ./config/apache2/sites-available/default /etc/apache2/sites-available/default
+ADD ./config/apache2/sites-available/default-ssl /etc/apache2/sites-available/default-ssl
+ADD ./config/apache2/sites-available/host.conf /etc/apache2/sites-available/includes/host.conf
 ADD ./config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-ADD ./config/fastcgi.conf /etc/apache2/mods-enabled/fastcgi.conf
+ADD ./config/apache2/mods-enabled/fastcgi.conf /etc/apache2/mods-enabled/fastcgi.conf
+ADD ./config/php5/conf.d/xdebug.ini /etc/php5/fpm/conf.d/xdebug.ini
 
 # Generate SSL certificate and key
 RUN openssl req -batch -nodes -newkey rsa:2048 -keyout /etc/ssl/private/server.key -out /tmp/server.csr && \
