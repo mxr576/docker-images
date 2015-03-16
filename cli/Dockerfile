@@ -23,7 +23,8 @@ RUN \
     apt-get -y --force-yes install \
     php5-common php5-cli php-pear php5-mysql php5-imagick php5-mcrypt \
     php5-curl php5-gd php5-sqlite php5-json php5-memcache \
-    curl wget zip git mysql-client ruby1.9.1 rlwrap build-essential && \
+    curl wget zip git mysql-client ruby1.9.1 rlwrap build-essential \
+    supervisor && \
     # Cleanup
     DEBIAN_FRONTEND=noninteractive apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -55,3 +56,5 @@ WORKDIR /var/www
 
 # Home directory for bundle installs
 ENV BUNDLE_PATH .bundler
+
+CMD /usr/bin/supervisord -n
