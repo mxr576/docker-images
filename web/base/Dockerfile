@@ -71,7 +71,7 @@ RUN \
 ADD ./startup.sh /opt/startup.sh
 RUN chmod +x /opt/startup.sh
 
-ADD ./config/index.php /var/www/index.php
+ADD ./config/index.php /var/www/docroot/index.php
 
 RUN usermod -u 1000 www-data && \
     mkdir -p /var/run/apache2/fastcgi/dynamic && \

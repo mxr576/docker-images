@@ -67,7 +67,7 @@ RUN chmod +x /opt/startup.sh
 
 RUN mkdir /var/www
 
-ADD ./config/index.php /var/www/index.php
+ADD ./config/index.php /var/www/docroot/index.php
 
 RUN usermod -u 1000 www-data && \
     chown -R www-data:www-data /var/www
