@@ -24,8 +24,7 @@ RUN \
     php5-fpm php5-mysql php5-imagick php5-imap \
     php5-mcrypt php5-curl php5-cli php5-gd php5-sqlite php5-common php-apc \
     php-pear php5-json php5-memcache \
-    curl wget zip git mysql-client ruby1.9.1 rlwrap \
-    sudo build-essential && \
+    curl wget zip git mysql-client ruby1.9.1 rlwrap build-essential && \
     # Cleanup
     DEBIAN_FRONTEND=noninteractive apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
