@@ -11,20 +11,20 @@ ENV LC_ALL en_US.UTF-8
 # Prevent services autoload (http://jpetazzo.github.io/2013/10/06/policy-rc-d-do-not-start-services-automatically/)
 RUN echo '#!/bin/sh\nexit 101' > /usr/sbin/policy-rc.d && chmod +x /usr/sbin/policy-rc.d
 
-# Adding trusty repository for latest versions
-RUN sed -i 's/precise/trusty/' /etc/apt/sources.list
+# Adding https://launchpad.net/~ondrej/+archive/ubuntu/php5 PPA repo for php5.5
+RUN echo "deb http://ppa.launchpad.net/ondrej/php5/ubuntu precise main " >> /etc/apt/sources.list
 
 RUN \
     # Update system
     DEBIAN_FRONTEND=noninteractive apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y --force-yes && \
     # Install packages
     DEBIAN_FRONTEND=noninteractive \
-    apt-get -y install locales \
+    apt-get -y --force-yes install \
     php5-fpm php5-mysql php5-imagick php5-imap \
     php5-mcrypt php5-curl php5-cli php5-gd php5-sqlite php5-common php-apc \
     php-pear php5-json php5-memcache \
-    curl wget zip git mysql-client ruby-full rlwrap \
+    curl wget zip git mysql-client ruby1.9.1 rlwrap \
     sudo build-essential && \
     # Cleanup
     DEBIAN_FRONTEND=noninteractive apt-get clean && \
