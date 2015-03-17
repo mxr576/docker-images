@@ -17,24 +17,16 @@ RUN \
     DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y && \
     # Install packages
     DEBIAN_FRONTEND=noninteractive \
-    apt-get -y install php5-fpm php5-mysql php5-imagick php5-imap \
+    apt-get -y install php5-fpm php5-mysql php5-imagick \
     php5-mcrypt php5-curl php5-cli php5-gd php5-sqlite php5-common php-apc \
     php-pear php5-json php5-memcache \
-    git curl mysql-client supervisor \
+    mysql-client supervisor \
     nginx && \
     # Cleanup
     DEBIAN_FRONTEND=noninteractive apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN php5enmod mcrypt
-
-# Composer
-RUN curl -sS https://getcomposer.org/installer | php && \
-    mv composer.phar /usr/local/bin/composer && \
-    echo '\n#Composer \nexport PATH="$HOME/.composer/vendor/bin:$PATH"\n' >> ~/.bashrc
-
-# Drush
-RUN composer global require drush/drush:dev-master
 
 # Configuration
 ADD ./config/nginx.conf /etc/nginx/nginx.conf

@@ -20,10 +20,10 @@ RUN \
     DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y && \
     # Install packages
     DEBIAN_FRONTEND=noninteractive \
-    apt-get -y install php5-fpm php5-mysql php5-imagick php5-imap \
-    php5-mcrypt php5-curl php5-cli php5-gd php5-sqlite php5-common php-apc \
+    apt-get -y install php5-fpm php5-mysql php5-imagick \
+    php5-mcrypt php5-curl php5-gd php5-sqlite php5-common php-apc \
     php-pear php5-json php5-memcache php5-xdebug \
-    git curl mysql-client supervisor \
+    mysql-client supervisor \
     apache2-mpm-worker libapache2-mod-fastcgi && \
     # Cleanup
     DEBIAN_FRONTEND=noninteractive apt-get clean && \
@@ -31,14 +31,6 @@ RUN \
 
 RUN a2enmod actions alias fastcgi rewrite ssl && \
     a2ensite default-ssl
-
-# Composer
-RUN curl -sS https://getcomposer.org/installer | php && \
-    mv composer.phar /usr/local/bin/composer && \
-    echo '\n#Composer \nexport PATH="$HOME/.composer/vendor/bin:$PATH"\n' >> ~/.bashrc
-
-# Drush
-RUN composer global require drush/drush:dev-master
 
 # Configuration
 ADD ./config/apache2/sites-available/default /etc/apache2/sites-available/default
@@ -51,7 +43,6 @@ ADD ./config/php5/conf.d/xdebug.ini /etc/php5/fpm/conf.d/xdebug.ini
 # Generate SSL certificate and key
 RUN openssl req -batch -nodes -newkey rsa:2048 -keyout /etc/ssl/private/server.key -out /tmp/server.csr && \
     openssl x509 -req -days 365 -in /tmp/server.csr -signkey /etc/ssl/private/server.key -out /etc/ssl/certs/server.crt;rm /tmp/server.csr
-
 
 RUN \
     # PHP settings changes
