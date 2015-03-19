@@ -58,4 +58,13 @@ ENV PATH /root/.composer/vendor/bin:$PATH
 # Home directory for bundle installs
 ENV BUNDLE_PATH .bundler
 
-CMD /usr/bin/supervisord -n
+# SSH settigns
+COPY config/.ssh /root/.ssh
+# Drush settings
+COPY config/.drush /root/.drush
+
+# Startup script
+COPY ./startup.sh /opt/startup.sh
+RUN chmod +x /opt/startup.sh
+
+CMD /opt/startup.sh
