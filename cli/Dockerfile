@@ -41,9 +41,7 @@ RUN curl https://deb.nodesource.com/node012/pool/main/n/nodejs/nodejs_0.12.0-1no
 RUN npm install -g grunt-cli bower
 
 # Composer
-RUN curl -sS https://getcomposer.org/installer | php && \
-    mv composer.phar /usr/local/bin/composer && \
-    echo '\n#Composer \nexport PATH="$HOME/.composer/vendor/bin:$PATH"\n' >> ~/.bashrc
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Drush
 RUN composer global require drush/drush:dev-master
@@ -53,6 +51,9 @@ RUN sed -i 's/memory_limit = .*/memory_limit = 512M/' /etc/php5/cli/php.ini && \
     sed -i 's/max_execution_time = .*/max_execution_time = 300/' /etc/php5/cli/php.ini
 
 WORKDIR /var/www
+
+# Add Composer bin directory to PATH
+ENV PATH /root/.composer/vendor/bin:$PATH
 
 # Home directory for bundle installs
 ENV BUNDLE_PATH .bundler
