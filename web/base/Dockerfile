@@ -20,7 +20,7 @@ RUN \
     DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y && \
     # Install packages
     DEBIAN_FRONTEND=noninteractive \
-    apt-get -y install php5-fpm php5-mysql php5-imagick \
+    apt-get -y install php5-fpm php5-mysql php5-imagick imagemagick \
     php5-mcrypt php5-curl php5-gd php5-sqlite php5-common php-apc \
     php-pear php5-json php5-memcache php5-xdebug \
     mysql-client supervisor \
